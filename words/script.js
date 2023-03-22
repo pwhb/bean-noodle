@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     let lettersInDisplay = ""
 
     let score = 0
-    const total = wordForChildren.length
+    let total = 0
 
 
     const generateRandomArray = (letter) => {
@@ -182,9 +182,10 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const handleSubmit = () => {
         const resultEl = document.getElementById("result")
-        resultEl.innerHTML = getLetters() === currentItem.name ? '<p class="text-3xl text-success font-medium">Correcto!</p>' : '<p class="text-3xl text-error font-medium">Sorry! Please try again</p>'
+        resultEl.innerHTML = getLetters() === currentItem.name ? '<p class="text-3xl text-success font-medium">Correcto!</p>' : `<p class="text-3xl text-error font-medium">Sorry! The answer is <span class="text-accent">${currentItem.name}</span></p>`
 
         score = getLetters() === currentItem.name ? score + 1 : score
+        total++
         updateScore()
 
         const displayEl = document.getElementById("display")
@@ -219,12 +220,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const updateScore = () => {
         const scoreEl = document.getElementById("score")
+        console.log(randomizedArray.length);
         scoreEl.innerHTML = `${score}/${total}`
     }
 
     const updateImg = (item) => {
         const imgEl = document.getElementById("display-img")
-        imgEl.src = `/images/${item.src}`
+        imgEl.src = `images/${item.src}`
         imgEl.alt = item.name
     }
 
