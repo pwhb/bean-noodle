@@ -182,8 +182,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const handleSubmit = () => {
         const resultEl = document.getElementById("result")
-        resultEl.innerHTML = getLetters() === currentItem.name ? '<p class="text-3xl text-success font-medium">Correcto!</p>' : `<p class="text-3xl text-error font-medium">Sorry! The answer is <span class="text-accent">${currentItem.name}</span></p>`
-
+        resultEl.innerHTML = getLetters() === currentItem.name ? '<p class="text-3xl text-success font-medium">Correcto!</p>' : `<p class="text-3xl text-error font-medium">Sorry! The answer is <span class="text-black">${currentItem.name}</span></p>`
         score = getLetters() === currentItem.name ? score + 1 : score
         total++
         updateScore()
@@ -191,11 +190,23 @@ document.addEventListener('DOMContentLoaded', (event) => {
         const displayEl = document.getElementById("display")
         displayEl.innerHTML = ""
         updateImg(emptyItem)
+        const inputEl = document.getElementById("input-box")
+        inputEl.className = "flex flex-row gap-6 justify-center hidden"
 
         setTimeout(() => {
             resultEl.innerHTML = ""
-            randomizedArray.shift()
-            updateDisplay()
+            if (total === wordForChildren.length) {
+                displayEl.innerHTML = `<p class="text-success font-bold">Thank you for playing!</p><br>
+                <button id="reset-btn1" class="btn btn-xs btn-secondary mt-5">play again</button>`
+                const playAgainButton = document.getElementById("reset-btn1")
+                playAgainButton.addEventListener("click", startGame)
+            } else {
+                inputEl.className = "flex flex-row gap-6 justify-center"
+                randomizedArray.shift()
+                updateDisplay()
+            }
+
+
         }, 1500)
     }
 
@@ -207,7 +218,9 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     const startGame = () => {
         score = 0
-        randomizedArray = wordForChildren.sort(() => Math.random() - 0.5)
+        total = 0
+        randomizedArray = [...wordForChildren]
+        randomizedArray.sort(() => Math.random() - 0.5)
         updateDisplay()
         updateScore()
     }
