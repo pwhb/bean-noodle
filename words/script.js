@@ -47,7 +47,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             "src": "kangaroo-svgrepo-com.svg"
         },
         {
-            "name": "LION-FACE",
+            "name": "LION",
             "src": "lion-face-svgrepo-com.svg"
         },
         {
